@@ -13,13 +13,15 @@ export function UserMenu() {
     <div className="flex items-center gap-4">
       <span>{session.user.name}</span>
       <button
-        onClick={() => signOut({
+        onClick={async () => {
+          await signOut({
             fetchOptions: {
-                onSuccess: () => {
-                    router.push("/auth");
-                },
+              onSuccess: () => {
+                router.push("/auth");
+              },
             },
-        })}
+          });
+        }}
         className="p-2 bg-red-500 text-white rounded"
       >
         Logout
