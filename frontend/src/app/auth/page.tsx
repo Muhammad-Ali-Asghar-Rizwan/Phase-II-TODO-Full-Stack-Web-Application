@@ -13,23 +13,27 @@ export default function AuthPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isLogin) {
-      await signIn.email({
-        email,
-        password,
-      }, {
-        onSuccess: () => router.push("/"),
-        onError: (ctx) => alert(ctx.error.message),
-      });
-    } else {
-      await signUp.email({
-        email,
-        password,
-        name,
-      }, {
-        onSuccess: () => router.push("/"),
-        onError: (ctx) => alert(ctx.error.message),
-      });
+    try {
+      let result;
+      if (isLogin) {
+        result = await signIn({
+          email,
+          password,
+        });
+      } else {
+        result = await signUp({
+          email,
+          password,
+          name: name || undefined,
+        });
+      }
+      
+      // Store the token and user info
+      authClient.storeToken(result.token, result.user);
+      
+      router.push("/");
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "An error occurred");
     }
   };
 

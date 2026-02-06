@@ -20,13 +20,16 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await signIn.email({
+      const result = await signIn({
         email: formData.email,
         password: formData.password,
-      }, {
-        onSuccess: () => { window.location.href = "/dashboard"; },
-        onError: (ctx) => setError(ctx?.error?.message ?? "Failed to sign in"),
       });
+      
+      // Store the token and user info
+      authClient.storeToken(result.token, result.user);
+      
+      // Redirect to dashboard
+      window.location.href = "/dashboard";
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {

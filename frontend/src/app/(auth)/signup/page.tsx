@@ -22,14 +22,17 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      await signUp.email({
+      const result = await signUp({
         email: formData.email,
         password: formData.password,
-        name: formData.name,
-      }, {
-        onSuccess: () => { window.location.href = "/dashboard"; },
-        onError: (ctx) => setError(ctx?.error?.message ?? "Failed to sign up"),
+        name: formData.name || undefined,
       });
+      
+      // Store the token and user info
+      authClient.storeToken(result.token, result.user);
+      
+      // Redirect to dashboard
+      window.location.href = "/dashboard";
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {

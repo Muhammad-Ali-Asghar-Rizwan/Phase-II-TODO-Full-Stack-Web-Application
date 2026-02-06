@@ -1,16 +1,3 @@
-import { betterAuth } from "better-auth";
-import { openAPI } from "better-auth/plugins"
-
-export const auth = betterAuth({
-    database: {
-        provider: "postgres",
-        url: process.env.DATABASE_URL, 
-    },
-    emailAndPassword: {
-        enabled: true,
-    },
-    secret: process.env.BETTER_AUTH_SECRET,
-    plugins: [
-        openAPI()
-    ]
-});
+// This file is not needed since we're using the existing Python backend
+// The authentication is handled by the Python FastAPI backend
+// This is kept for reference but not actively used
