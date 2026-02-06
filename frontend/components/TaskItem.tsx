@@ -66,7 +66,7 @@ export default function TaskItem({ task, onToggleComplete, onTaskUpdated }: Task
             <div className="flex items-start space-x-3 flex-1">
               <button
                 onClick={() => onToggleComplete?.(task.id)}
-                className={`mt-1 flex-shrink-0 h-5 w-5 rounded border-2 transition-colors ${
+                className={`mt-1 shrink-0 h-5 w-5 rounded border-2 transition-colors ${
                   task.completed
                     ? "bg-blue-600 border-blue-600"
                     : "bg-white border-gray-300 hover:border-blue-500"

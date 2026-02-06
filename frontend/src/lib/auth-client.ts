@@ -63,7 +63,7 @@ class AuthClient {
     return response.json();
   }
 
-  async signOut(): Promise<void> {
+  async signOut(p0: { fetchOptions: { onSuccess: () => void; }; }): Promise<void> {
     // Clear local storage tokens
     if (typeof window !== 'undefined') {
       localStorage.removeItem('auth_token');
@@ -105,7 +105,8 @@ class AuthClient {
 export const authClient = new AuthClient();
 
 // Export the methods to match the expected interface
-export const { signIn, signUp, signOut } = authClient;
+export const { signIn, signOut } = authClient;
+export const signUp = authClient.signup.bind(authClient);
 
 // Custom hook for session management
 export function useSession() {

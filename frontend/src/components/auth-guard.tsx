@@ -10,16 +10,16 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
   }
 
-  const { data: session, isPending } = useSession();
+  const { user: session, isLoading } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isPending && !session) {
+    if (!isLoading && !session) {
       router.push("/auth");
     }
-  }, [session, isPending, router]);
+  }, [session, isLoading, router]);
 
-  if (isPending) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
   if (!session) return null;
 
   return <>{children}</>;

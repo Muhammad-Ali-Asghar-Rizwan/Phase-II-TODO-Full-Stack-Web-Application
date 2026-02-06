@@ -13,7 +13,7 @@ interface Todo {
 }
 
 export function TodoList() {
-    const { data: session } = useSession();
+    const { user: session } = useSession();
     const [todos, setTodos] = useState<Todo[]>([]);
     const [newTodo, setNewTodo] = useState("");
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
