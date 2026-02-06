@@ -1,4 +1,4 @@
-// Custom authentication client for the existing Python JWT backend
+// Custom authentication client for the Next.js API routes backend
 import { useState, useEffect } from 'react';
 
 interface User {
@@ -26,11 +26,12 @@ class AuthClient {
   private baseUrl: string;
   
   constructor() {
-    this.baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
+    // For Next.js API routes, we use relative paths
+    this.baseUrl = '';
   }
 
   async signup(data: SignupData): Promise<TokenResponse> {
-    const response = await fetch(`${this.baseUrl}/api/auth/signup`, {
+    const response = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -47,7 +48,7 @@ class AuthClient {
   }
 
   async signIn(credentials: LoginCredentials): Promise<TokenResponse> {
-    const response = await fetch(`${this.baseUrl}/api/auth/login`, {
+    const response = await fetch('/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ class AuthClient {
     return response.json();
   }
 
-  async signOut(p0: { fetchOptions: { onSuccess: () => void; }; }): Promise<void> {
+  async signOut(): Promise<void> {
     // Clear local storage tokens
     if (typeof window !== 'undefined') {
       localStorage.removeItem('auth_token');
