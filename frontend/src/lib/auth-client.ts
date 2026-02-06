@@ -64,7 +64,7 @@ class AuthClient {
     return response.json();
   }
 
-  async signOut(): Promise<void> {
+  async signOut(p0: { fetchOptions: { onSuccess: () => void; }; }): Promise<void> {
     // Clear local storage tokens
     if (typeof window !== 'undefined') {
       localStorage.removeItem('auth_token');
