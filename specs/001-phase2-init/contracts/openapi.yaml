@@ -1,0 +1,39 @@
+openapi: 3.1.0
+info:
+  title: Todo API
+  version: 1.0.0
+paths:
+  /api/todos:
+    get:
+      summary: List own todos
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of todos
+    post:
+      summary: Create todo
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Created
+  /api/todos/{id}:
+    get:
+      summary: Get todo
+      security:
+        - bearerAuth: []
+    put:
+      summary: Update todo
+      security:
+        - bearerAuth: []
+    delete:
+      summary: Delete todo
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
