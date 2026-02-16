@@ -28,11 +28,14 @@ async def get_current_user(
 ) -> dict:
     """Extract and verify user from JWT token."""
     token = credentials.credentials
+    print(f"DEBUG: Received token: {token[:50]}...")  # Log first 50 chars
     payload = verify_token(token)
     if payload is None:
+        print(f"DEBUG: Token verification failed for token: {token[:50]}...")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired authentication token",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    print(f"DEBUG: Token verified successfully for user: {payload}")
     return payload

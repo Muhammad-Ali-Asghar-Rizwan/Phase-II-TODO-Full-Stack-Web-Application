@@ -5,11 +5,26 @@ import { useRouter } from "next/navigation";
 import { getAuthUser, logout, type AuthUser } from "../../lib/auth";
 import TaskList from "../../components/TaskList";
 import TaskForm from "../../components/TaskForm";
+import ChatInterface from "../../src/components/ChatInterface"; // Import the ChatInterface component
 
 export default function DashboardPage() {
+
+
+
+
+
+
+
+
+
+
+
+
+  
   const router = useRouter();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showChat, setShowChat] = useState(false); // State to toggle chat interface
 
   useEffect(() => {
     // Get user from localStorage on client side only
@@ -74,13 +89,31 @@ export default function DashboardPage() {
             <h2 className="text-2xl font-bold text-gray-900">My Tasks</h2>
             <p className="text-sm text-gray-600">Manage your todo items</p>
           </div>
-          <button
-            onClick={() => setShowAddForm(!showAddForm)}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            {showAddForm ? "Cancel" : "+ Add Task"}
-          </button>
+          <div className="flex space-x-4">
+            <button
+              onClick={() => setShowChat(!showChat)}
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            >
+              {showChat ? "Hide Chat" : "AI Assistant"}
+            </button>
+            <button
+              onClick={() => setShowAddForm(!showAddForm)}
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              {showAddForm ? "Cancel" : "+ Add Task"}
+            </button>
+          </div>
         </div>
+
+        {/* Chat Interface - Toggle visibility */}
+        {showChat && (
+          <div className="mb-6 bg-white border border-gray-200 rounded-lg p-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              AI Task Assistant
+            </h3>
+            <ChatInterface userId={user.id} />
+          </div>
+        )}
 
         {/* Add Task Form */}
         {showAddForm && (

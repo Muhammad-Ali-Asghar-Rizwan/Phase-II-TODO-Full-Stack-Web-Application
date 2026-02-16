@@ -9,9 +9,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # JWT Configuration
-SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your-super-secret-jwt-key-change-this-in-production")
-ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
-EXPIRE_MINUTES = int(os.getenv("JWT_EXPIRE_MINUTES", "10080"))  # 7 days
+# IMPORTANT: Both frontend and backend must use the SAME SECRET_KEY
+SECRET_KEY = os.getenv("SECRET_KEY", "same-secret-key-for-both-frontend-and-backend-dev-only")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
+EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "10080"))  # 7 days
 
 
 def create_access_token(user_id: str, email: str) -> str:
@@ -36,7 +37,13 @@ def verify_token(token: str) -> Optional[Dict]:
         if user_id is None or email is None:
             return None
         return {"user_id": user_id, "email": email}
-    except JWTError:
+    except JWTError as e:
+        # Token is invalid (expired, wrong secret, malformed, etc.)
+        print(f"Token verification failed (JWTError): {e}")
+        return None
+    except Exception as e:
+        # Any other unexpected error
+        print(f"Unexpected error during token verification: {e}")
         return None
 
 
