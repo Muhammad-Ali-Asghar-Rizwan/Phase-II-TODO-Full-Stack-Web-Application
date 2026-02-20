@@ -7,9 +7,10 @@ import TaskItem from "./TaskItem";
 
 interface TaskListProps {
   onTaskUpdated?: () => void;
+  filter?: 'all' | 'pending' | 'completed';
 }
 
-export default function TaskList({ onTaskUpdated }: TaskListProps) {
+export default function TaskList({ onTaskUpdated, filter = 'all' }: TaskListProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -64,7 +65,14 @@ export default function TaskList({ onTaskUpdated }: TaskListProps) {
     );
   }
 
-  if (tasks.length === 0) {
+  // Filter tasks based on the selected filter
+  const filteredTasks = tasks.filter(task => {
+    if (filter === 'pending') return !task.completed;
+    if (filter === 'completed') return task.completed;
+    return true; // 'all' filter
+  });
+
+  if (filteredTasks.length === 0) {
     return (
       <div className="text-center py-12">
         <svg
@@ -80,9 +88,15 @@ export default function TaskList({ onTaskUpdated }: TaskListProps) {
             d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 012 2v2a2 2 0 012 2h10a2 2 0 012-2V7a2 2 0 00-2-2H9z"
           />
         </svg>
-        <h3 className="mt-4 text-lg font-medium text-gray-900">No tasks yet</h3>
+        <h3 className="mt-4 text-lg font-medium text-gray-900">
+          {filter === 'pending' ? 'No pending tasks' :
+           filter === 'completed' ? 'No completed tasks' :
+           'No tasks yet'}
+        </h3>
         <p className="mt-2 text-sm text-gray-600">
-          Create your first task to get started!
+          {filter === 'pending' ? 'All tasks are completed! Great job!' :
+           filter === 'completed' ? 'Complete some tasks to see them here.' :
+           'Create your first task to get started!'}
         </p>
       </div>
     );
@@ -90,7 +104,7 @@ export default function TaskList({ onTaskUpdated }: TaskListProps) {
 
   return (
     <div className="space-y-3">
-      {tasks.map((task) => (
+      {filteredTasks.map((task) => (
         <TaskItem
           key={task.id}
           task={task}
