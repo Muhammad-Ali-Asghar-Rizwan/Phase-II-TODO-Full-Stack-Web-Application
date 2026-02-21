@@ -52,6 +52,7 @@ export function setAuthToken(token: string, expiresIn: number = 604800000): void
   localStorage.setItem(AUTH_TOKEN_KEY, JSON.stringify(tokenData));
 
   // Also set cookie for server-side middleware to read
+  // Store ONLY the raw token in cookie (not JSON)
   document.cookie = `${AUTH_COOKIE_NAME}=${token}; path=/; max-age=${Math.floor(expiresIn / 1000)}; SameSite=Lax`;
 }
 

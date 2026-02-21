@@ -1,6 +1,7 @@
 import { SignJWT, jwtVerify } from 'jose';
 
-const JWT_SECRET = process.env.JWT_SECRET_KEY || 'your-super-secret-jwt-key-change-this-in-production';
+// IMPORTANT: This MUST match the backend's SECRET_KEY in jwt_utils.py
+const JWT_SECRET = process.env.JWT_SECRET_KEY || process.env.SECRET_KEY || 'same-secret-key-for-both-frontend-and-backend-dev-only';
 const ALGORITHM = process.env.JWT_ALGORITHM || 'HS256';
 const EXPIRE_MINUTES = parseInt(process.env.JWT_EXPIRE_MINUTES || '10080'); // 7 days
 

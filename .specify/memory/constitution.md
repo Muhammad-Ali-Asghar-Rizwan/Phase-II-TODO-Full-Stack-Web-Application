@@ -1,55 +1,54 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- 
+Sync Impact Report:
+- Version change: N/A -> 1.0.0
+- Modified principles: None (new constitution)
+- Added sections: All principles and sections for Todo AI Chatbot project
+- Removed sections: None
+- Templates requiring updates: N/A
+- Follow-up TODOs: None
+-->
+
+# Todo AI Chatbot Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Extension Over Rewrite
+Existing Todo application functionality must be preserved and extended, not rewritten. All new AI features must integrate seamlessly with the current system without disrupting existing workflows.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. MCP-First Architecture
+AI agent interactions with tasks must occur exclusively through MCP (Model Context Protocol) tools. All task operations must be wrapped in standardized MCP interfaces to ensure consistent communication between AI and backend services.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Agentic Development Stack
+All implementation must leverage agentic development tools and AI-assisted coding. Manual coding should be minimized in favor of AI-assisted generation and refinement of code.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Statelessness Requirement
+Backend services must remain stateless, with all conversation state persisted in the database. No session-based state should be maintained on the server side.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Database-Centric State Management
+Conversation state, AI context, and all related metadata must be persisted in the Neon PostgreSQL database using existing table structures where possible, with extensions only when necessary.
 
-### [PRINCIPLE_6_NAME]
+### VI. Graceful Error Handling
+AI interactions must include comprehensive error handling with clear user-facing messages. All operations must provide appropriate fallbacks and confirmations before executing destructive actions.
 
+## Technology Stack Requirements
 
-[PRINCIPLE__DESCRIPTION]
+- Backend: FastAPI (Python) with SQLModel ORM
+- AI: OpenAI Agents SDK for chatbot functionality
+- MCP: Official MCP SDK for tool integrations
+- Database: Neon PostgreSQL (leveraging existing schema)
+- Frontend: OpenAI ChatKit for user interface
+- Authentication: Better Auth for secure access
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Development Workflow
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- All features must begin with specification and task breakdown
+- MCP tools must wrap existing CRUD operations for tasks
+- AI agent capabilities must be tested through conversation flows
+- Integration tests must validate AI-to-database communication paths
+- Code reviews must verify compliance with MCP-first architecture
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution governs all development activities for Phase III: Todo AI Chatbot. All implementations must comply with these principles. Amendments require documentation of impact on existing architecture and approval from project stakeholders.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-02-07 | **Last Amended**: 2026-02-07
